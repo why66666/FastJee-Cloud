@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.chi365.fastjee.cloud.web.admin.dao.sys.SysRoleMenuDao">
+
+    <!--表名 -->
+    <sql id="tableName">
+        sys_role_menu a
+    </sql>
+
+    <!--join -->
+    <sql id="join">
+        sys_role_menu a
+        inner join
+          sys_menu m on a.menu_id = m.key_id
+        inner join
+          sys_role r on a.role_id = r.key_id
+    </sql>
+
+    <!-- 字段 -->
+    <sql id="Field">
+        a.role_id as "role.keyId",
+        a.menu_id as "menu.keyId"
+    </sql>
+
+    <!-- 字段 -->
+    <sql id="JoinField">
+        r.key_id as "role.keyId",
+        r.name as "role.name",
+        m.key_id as "menu.keyId"
+    </sql>
+
+    <!-- 字段值 -->
+    <sql id="FieldValue">
+        #{role.keyId},
+        #{menu.keyId}
+    </sql>
+
+    <!-- 自检条件 -->
+    <sql id="WhereTerm">
+        <if test="role != null and role.keyId != ''">
+            AND a.role_id = #{role.keyId}
+        </if>
+        <if test="menu != null and menu.keyId != ''">
+            AND a.menu_id = #{menu.keyId}
+        </if>
+    </sql>
+
+    <!-- 自检set属性 -->
+    <sql id="SetTerm">
+        <if test="role != null and role.keyId != ''">
+            a.role_id = #{role.keyId},
+        </if>
+        <if test="menu != null and menu.keyId != ''">
+            a.menu_id = #{menu.keyId},
+        </if>
+    </sql>
+
+
+    <!-- 查询数据列表 -->
+    <select id="findList" resultType="SysRoleMenu" parameterType="SysRoleMenu">
+        SELECT
+        <include refid="JoinField"/>
+        FROM <include refid="join"></include>
+        <where>
+            <include refid="WhereTerm"></include>
+        </where>
+    </select>
+
+
+    <!-- 查询所有数据列表 -->
+    <select id="findAllList" resultType="SysRoleMenu">
+        SELECT
+        <include refid="JoinField"/>
+        FROM <include refid="join"></include>
+    </select>
+
+
+    <!-- 插入数据 -->
+    <insert id="insert" parameterType="SysRoleMenu">
+        insert into
+        sys_role_menu
+        (
+        role_id,
+        menu_id
+        ) values (
+        <include refid="FieldValue"></include>
+        )
+    </insert>
+
+    <!-- 删除数据（该方法为物理删除，逻辑删除使用update更新data_status字段） -->
+    <delete id="delete" parameterType="SysRoleMenu">
+        delete from
+        sys_role_menu
+        where
+        role_id = #{role.keyId}
+    </delete>
+
+
+
+
+
+
+</mapper>

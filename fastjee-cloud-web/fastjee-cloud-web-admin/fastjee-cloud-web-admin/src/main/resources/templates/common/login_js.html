@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="login_js">
+    <script th:src="@{/bower_components/jquery/dist/jquery.min.js}"></script>
+    <script th:src="@{/bower_components/bootstrap/dist/js/bootstrap.min.js}"></script>
+    <script th:src="@{/dist/js/login/jquery.backstretch.min.js}"></script>
+    <script th:src="@{/dist/js/login/scripts.js}"></script>
+    <!--jQuery Validation Plugin v1.19.0-->
+    <script th:src="@{/plugins/jquery-validation-1.19.0/dist/jquery.validate.js}"></script>
+    <script th:src="@{/plugins/jquery-validation-1.19.0/dist/additional-methods.js}"></script>
+    <script th:src="@{/plugins/jquery-validation-1.19.0/dist/localization/messages_zh.min.js}"></script>
+    <script th:src="@{/dist/js/validate.js}"></script>
+    <script th:src="@{/dist/js/formAjax.js}"></script>
+</div>
+</body>
+</html>

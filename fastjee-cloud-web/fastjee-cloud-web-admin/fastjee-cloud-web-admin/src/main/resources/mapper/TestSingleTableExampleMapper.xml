@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TestSingleTableExampleDao">
+
+    <!--表名 -->
+    <sql id="tableName">
+		test_single_table_example
+	</sql>
+
+    <!-- 字段 -->
+    <sql id="Field">
+		se_name,
+		se_email,
+		se_content,
+		se_date,
+		se_status,
+		se_id
+	</sql>
+
+    <!-- 字段值 -->
+    <sql id="FieldValue">
+		#{se_name},
+		#{se_email},
+		#{se_content},
+		#{se_date},
+		#{se_status},
+		#{se_id}
+	</sql>
+
+    <!-- 新增-->
+    <insert id="save" parameterType="TestSingleTableExample">
+        insert into
+        <include refid="tableName"></include>
+        (
+        <include refid="Field"></include>
+        ) values (
+        <include refid="FieldValue"></include>
+        )
+    </insert>
+
+    <!-- 删除-->
+    <delete id="delete" parameterType="TestSingleTableExample">
+        delete from
+        <include refid="tableName"></include>
+        where
+        se_id = #{se_id}
+    </delete>
+
+    <!-- 修改
+     se_name,
+		se_email,
+		se_content,
+		se_date,
+		se_status,
+		se_id-->
+    <update id="edit" parameterType="TestSingleTableExample">
+        update
+        <include refid="tableName"></include>
+        set
+        se_name = #{se_name},
+        se_email = #{se_email},
+        se_content = #{se_content},
+        se_date = #{se_date},
+        se_status = #{se_status}
+        where
+        se_id = #{se_id}
+    </update>
+
+    <!-- 通过ID获取数据 -->
+    <select id="findById" parameterType="TestSingleTableExample" resultType="TestSingleTableExample">
+        select
+        <include refid="Field"></include>
+        from
+        <include refid="tableName"></include>
+        where
+        se_id = #{se_id}
+    </select>
+
+    <!--    &lt;!&ndash; 列表 &ndash;&gt;
+        <select id="datalistPage" parameterType="page" resultType="TestSingleTableExample">
+            select
+            <include refid="Field"></include>
+            from
+            <include refid="tableName"></include>
+            where 1=1
+            <if test="pd.keywords!= null and pd.keywords != ''">&lt;!&ndash; 关键词检索 &ndash;&gt;
+                and
+                (
+                NAME LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+                )
+            </if>
+        </select>-->
+
+    <!-- 列表(全部) -->
+    <select id="listAll" resultType="TestSingleTableExample">
+        select
+        <include refid="Field"></include>
+        from
+        <include refid="tableName"></include>
+    </select>
+
+    <!-- 批量删除 -->
+    <delete id="deleteAll" parameterType="int">
+        delete from
+        <include refid="tableName"></include>
+        where
+        se_id in
+        <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <select id="selectCount" resultType="int">
+      SELECT COUNT(*) FROM <include refid="tableName"></include>
+    </select>
+
+    <select id="pageList" resultType="TestSingleTableExample" parameterType="HashMap">
+        SELECT
+        <include refid="Field"></include>
+        FROM
+        <include refid="tableName"></include> LIMIT ${start}, ${length}
+    </select>
+</mapper>

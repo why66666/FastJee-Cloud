@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.chi365.fastjee.cloud.web.admin.dao.sys.SysRoleDao">
+
+    <!--表名 -->
+    <sql id="tableName">
+        sys_role a
+    </sql>
+
+    <!-- 字段 -->
+    <sql id="Field">
+        a.key_id,
+        a.team_id,
+        a.name,
+        a.info,
+        a.create_by as "createBy.keyId",
+        a.create_date,
+        a.update_by as "updateBy.keyId",
+        a.update_date,
+        a.remarks,
+        a.data_status
+    </sql>
+
+    <!-- 字段值 -->
+    <sql id="FieldValue">
+        #{keyId},
+        #{teamId},
+        #{name},
+        #{info},
+        #{createBy.keyId},
+        #{createDate},
+        #{updateBy.keyId},
+        #{updateDate},
+        #{remarks},
+        #{dataStatus}
+    </sql>
+
+    <!-- 自检条件 -->
+    <sql id="WhereTerm">
+        <if test="teamId != null and teamId != ''">
+            AND a.team_id = #{teamId}
+        </if>
+        <if test="name != null and name != ''">
+            AND a.name = #{name}
+        </if>
+        <if test="info != null and info != ''">
+            AND a.info = #{info}
+        </if>
+        <if test="createBy != null">
+            <if test="createBy.keyId != null and createBy.keyId != ''">
+                AND a.create_by = #{createBy.keyId}
+            </if>
+        </if>
+        <if test="createDate != null">
+            AND a.create_date = #{createDate}
+        </if>
+        <if test="updateBy != null">
+            <if test="updateBy.keyId != null and updateBy.keyId != ''">
+                AND a.update_by = #{updateBy.keyId}
+            </if>
+        </if>
+        <if test="updateDate != null">
+            AND a.update_date = #{updateDate}
+        </if>
+        <if test="remarks != null and remarks != ''">
+            AND a.remarks = #{remarks}
+        </if>
+        <if test="dataStatus != null and dataStatus != ''">
+            AND a.data_status = #{dataStatus}
+        </if>
+    </sql>
+
+    <!-- 自检set属性 -->
+    <sql id="SetTerm">
+        <if test="teamId != null and teamId != ''">
+        a.team_id = #{teamId},
+        </if>
+        <if test="name != null and name != ''">
+        a.name = #{name},
+        </if>
+        <if test="info != null and info != ''">
+        a.info = #{info},
+        </if>
+        <if test="createBy != null">
+            <if test="createBy.keyId != null and createBy.keyId != ''">
+                a.create_by = #{createBy.keyId},
+            </if>
+        </if>
+        <if test="createDate != null">
+            a.create_date = #{createDate},
+        </if>
+        <if test="updateBy != null">
+            <if test="updateBy.keyId != null and updateBy.keyId != ''">
+                a.update_by = #{updateBy.keyId},
+            </if>
+        </if>
+        <if test="updateDate != null">
+            a.update_date = #{updateDate},
+        </if>
+        <if test="remarks != null and remarks != ''">
+            a.remarks = #{remarks},
+        </if>
+        <if test="dataStatus != null and dataStatus != ''">
+            a.data_status = #{dataStatus}
+        </if>
+    </sql>
+
+    <!-- 模糊查询条件 -->
+    <sql id="Fuzzy">
+        <if test="search != null and search != ''">
+            (
+            a.team_id LIKE concat(concat('%',#{search}),'%')
+         or
+            a.name LIKE concat(concat('%',#{search}),'%')
+         or
+            a.info LIKE concat(concat('%',#{search}),'%')
+                     )
+        </if>
+        and
+        a.data_status = #{status}
+    </sql>
+
+
+    <!-- 高级搜索条件 -->
+    <sql id="SearchPlus">
+        <if test="searchPlusParams != null">
+            <if test="searchPlusParams.teamId != null and searchPlusParams.teamId != ''">
+                AND a.team_id = #{searchPlusParams.teamId}
+            </if>
+            <if test="searchPlusParams.name != null and searchPlusParams.name != ''">
+                AND a.name = #{searchPlusParams.name}
+            </if>
+            <if test="searchPlusParams.info != null and searchPlusParams.info != ''">
+                AND a.info = #{searchPlusParams.info}
+            </if>
+            <if test="searchPlusParams.bwCreateDate != null and searchPlusParams.bwCreateDate != ''">
+                AND (
+                a.create_date between
+                <foreach collection="searchPlusParams.bwCreateDate.split(' - ')" item="item" index="index" separator="and">
+                    #{item}
+                </foreach>
+                )
+            </if>
+            <if test="searchPlusParams.bwUpdateDate != null and searchPlusParams.bwUpdateDate != ''">
+                AND (
+                a.update_date between
+                <foreach collection="searchPlusParams.bwUpdateDate.split(' - ')" item="item" index="index" separator="and">
+                    #{item}
+                </foreach>
+                )
+            </if>
+        </if>
+    </sql>
+
+
+    <!-- 根据keyId查询 -->
+    <select id="get" resultType="SysRole" parameterType="String">
+        SELECT
+        <include refid="Field"/>
+        FROM <include refid="tableName"></include>
+        WHERE a.key_id = #{keyId}
+    </select>
+
+    <!-- 查询数据列表 -->
+    <select id="findList" resultType="SysRole" parameterType="SysRole">
+        SELECT
+        <include refid="Field"/>
+        FROM <include refid="tableName"></include>
+        <where>
+            <include refid="WhereTerm"></include>
+        </where>
+    </select>
+
+
+    <!-- 查询所有数据列表 -->
+    <select id="findAllList" resultType="SysRole">
+        SELECT
+        <include refid="Field"/>
+        FROM <include refid="tableName"></include>
+    </select>
+
+    <!-- 获得数据总条数(用于分页) -->
+    <select id="getCount" resultType="int">
+        SELECT
+        count(a.key_id)
+        FROM <include refid="tableName"></include>
+        where a.data_status = '0'
+    </select>
+
+    <!-- 查询分页数据列表 -->
+    <select id="pageList" resultType="SysRole" parameterType="HashMap">
+        SELECT
+        <include refid="Field"/>
+        FROM <include refid="tableName"></include>
+        <where>
+            <include refid="Fuzzy"></include>
+            <include refid="SearchPlus"></include>
+        </where>
+        order by a.update_date desc
+        limit ${start},${length}
+    </select>
+
+    <!-- 插入数据 -->
+    <insert id="insert" parameterType="SysRole">
+        insert into
+        sys_role
+        (
+        key_id,
+        team_id,
+        name,
+        info,
+        create_by,
+        create_date,
+        update_by,
+        update_date,
+        remarks,
+        data_status
+        ) values (
+        <include refid="FieldValue"></include>
+        )
+    </insert>
+
+    <!-- 删除数据（该方法为物理删除，逻辑删除使用update更新data_status字段） -->
+    <delete id="delete" parameterType="SysRole">
+        delete from
+        <include refid="tableName"></include>
+        where
+        a.key_id = #{keyId}
+    </delete>
+
+    <!-- 更新数据 -->
+    <update id="update" parameterType="SysRole">
+        update
+        <include refid="tableName"></include>
+        <set>
+            <include refid="SetTerm"></include>
+        </set>
+        where
+        a.key_id = #{keyId}
+    </update>
+
+    <!-- 批量删除，逻辑删除 -->
+    <update id="deleteMulti">
+        update
+        <include refid="tableName"></include>
+        set a.data_status = '1'
+        where a.key_id in
+        <foreach collection="array" open="(" close=")" separator="," item="id">
+            #{id}
+        </foreach>
+    </update>
+
+</mapper>

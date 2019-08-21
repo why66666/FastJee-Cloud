@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.chi365.fastjee.cloud.web.admin.dao.sys.SysUserRoleDao">
+
+    <!--表名 -->
+    <sql id="tableName">
+        sys_user_role a
+    </sql>
+
+    <!--join -->
+    <sql id="join">
+        sys_user_role a
+        inner join
+          sys_user u on a.user_id = u.key_id
+        inner join
+          sys_role r on a.role_id = r.key_id
+    </sql>
+
+    <!-- 字段 -->
+    <sql id="Field">
+        a.role_id as "role.keyId",
+        a.user_id as "user.keyId"
+    </sql>
+
+    <!-- 字段 -->
+    <sql id="JoinField">
+        r.key_id as "role.keyId",
+        r.name as "role.name",
+        u.key_id as "user.keyId",
+        u.team_id as "user.teamId",
+        u.account as "user.account"
+    </sql>
+
+    <!-- 字段值 -->
+    <sql id="FieldValue">
+        #{role.keyId},
+        #{user.keyId}
+    </sql>
+
+    <!-- 自检条件 -->
+    <sql id="WhereTerm">
+        <if test="role != null and role.keyId != ''">
+            AND a.role_id = #{role.keyId}
+        </if>
+        <if test="user != null and user.keyId != ''">
+            AND a.user_id = #{user.keyId}
+        </if>
+    </sql>
+
+    <!-- 自检set属性 -->
+    <sql id="SetTerm">
+        <if test="role != null and role.keyId != ''">
+        a.role_id = #{role.keyId},
+        </if>
+        <if test="user != null and user.keyId != ''">
+        a.user_id = #{user.keyId},
+        </if>
+    </sql>
+
+
+    <!-- 查询数据列表 -->
+    <select id="findList" resultType="SysUserRole" parameterType="SysUserRole">
+        SELECT
+        <include refid="JoinField"/>
+        FROM <include refid="join"></include>
+        <where>
+            <include refid="WhereTerm"></include>
+        </where>
+    </select>
+
+
+    <!-- 查询所有数据列表 -->
+    <select id="findAllList" resultType="SysUserRole">
+        SELECT
+        <include refid="JoinField"/>
+        FROM <include refid="join"></include>
+    </select>
+
+
+    <!-- 插入数据 -->
+    <insert id="insert" parameterType="SysUserRole">
+        insert into
+        sys_user_role
+        (
+        role_id,
+        user_id
+        ) values (
+        <include refid="FieldValue"></include>
+        )
+    </insert>
+
+    <!-- 删除数据（该方法为物理删除，逻辑删除使用update更新data_status字段） -->
+    <delete id="delete" parameterType="SysUserRole">
+        delete from
+        sys_user_role
+        where
+        user_id = #{user.keyId}
+    </delete>
+
+
+
+
+
+
+</mapper>

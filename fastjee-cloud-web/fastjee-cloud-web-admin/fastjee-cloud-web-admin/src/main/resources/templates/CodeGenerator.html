@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="common/common_resource :: common_resource"></div>
+    <title>代码生成器</title>
+</head>
+<!--
+BODY TAG OPTIONS:
+=================
+Apply one or more of the following classes to get the
+desired effect
+|---------------------------------------------------------|
+| SKINS         | skin-blue                               |
+|               | skin-black                              |
+|               | skin-purple                             |
+|               | skin-yellow                             |
+|               | skin-red                                |
+|               | skin-green                              |
+|---------------------------------------------------------|
+|LAYOUT OPTIONS | fixed                                   |
+|               | layout-boxed                            |
+|               | layout-top-nav                          |
+|               | sidebar-collapse                        |
+|               | sidebar-mini                            |
+|---------------------------------------------------------|
+-->
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <!--Header-->
+    <div th:replace="common/common_mainHeader :: common_mainHeader"></div>
+    <!--Sidebar-->
+    <div th:replace="common/common_mainSidebar :: common_mainSidebar"></div>
+
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                系统管理
+                <small>代码生成器</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> 首页</a></li>
+                <li class="active">代码生成器</li>
+            </ol>
+        </section>
+
+        <!-- Main content -->
+        <section class="content container-fluid">
+            <!--------------------------
+              | Your Page Content Here |
+              -------------------------->
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title">MBG生成Dao、Entity、Mapper</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                class="fa fa-minus"></i></button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="row">
+                        <form action="/mbg" method="post">
+                        <div class="col-sm-12">
+                            <div class="form-group col-sm-12">
+                                <label class="col-sm-2 control-label">业务表</label>
+                                <div class="col-sm-7">
+                                <select class="form-control select2 select2-hidden-accessible" style="width: 100%;"
+                                        tabindex="-1" aria-hidden="true" name="table_name">
+                                    <option selected="selected" th:each="table:${tables}" th:text="${table.table_name}+'#'+${table.table_comment}" th:value="${table.table_name}">Alabama</option>
+                                </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group col-sm-12">
+                                <label for="entityPackage" class="col-sm-2 control-label">实体类所在包名</label>
+
+                                <div class="col-sm-7">
+                                    <input type="text" class="form-control" id="entityPackage" placeholder="例如：user(默认加前缀cn.chi365.fastjee.cloud.web.admin.entity)">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group col-sm-12">
+                                <label for="mapperPackage" class="col-sm-2 control-label">mapper所在包名</label>
+
+                                <div class="col-sm-7">
+                                    <input type="text" class="form-control" id="mapperPackage" placeholder="例如：user(默认在classpath：mapper)">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group col-sm-12">
+                                <label for="daoPackage" class="col-sm-2 control-label">Dao层类所在包名</label>
+
+                                <div class="col-sm-7">
+                                    <input type="text" class="form-control" id="daoPackage" placeholder="例如：user(默认加前缀cn.chi365.fastjee.cloud.web.admin.dao)">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="col-sm-9">
+                                <button type="reset" class="btn btn-default col-sm-2">重置</button>
+                                <button type="submit" class="btn btn-info pull-right col-sm-offset-5 col-sm-2" >生成代码</button>
+                            </div>
+                        </div>
+                        </form>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer">
+                    Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and
+                    information about
+                    the plugin.
+                </div>
+            </div>
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Main Footer -->
+    <div th:replace="common/common_footer :: common_footer"></div>
+    <!-- Control Sidebar -->
+    <div th:replace="common/common_controlSidebar :: common_controlSidebar"></div>
+
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED JS SCRIPTS -->
+
+<div th:replace="common/common_JS :: common_JS"></div>
+
+<!-- Optionally, you can add Slimscroll and FastClick plugins.
+     Both of these plugins are recommended to enhance the
+     user experience. -->
+</body>
+</html>

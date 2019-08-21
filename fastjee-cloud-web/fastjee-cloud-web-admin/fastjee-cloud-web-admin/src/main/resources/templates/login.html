@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>FastJee-Cloud | 登录</title>
+    <div th:replace="common/login_head :: login_head"></div>
+</head>
+
+<body>
+
+<!-- Top content -->
+<div class="top-content">
+
+    <div id="alert" class="alert alert-success alert-dismissible col-md-12 col-sm-12 col-xs-12" style="display: none">
+        <button type="button" class="close" onclick="$('#alert').hide('fast')">×</button>
+        <h4 id="msg"></h4>
+        <span id="msgContent"></span>
+    </div>
+    <div class="inner-bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8 col-sm-offset-2 text">
+                    <h1><strong>FastJee</strong> Login </h1>
+                    <div class="description">
+                        <p>
+                             高效、稳定的快速开发平台Cloud版本 <strong>FastJee-Cloud</strong>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-3 form-box">
+                    <div class="form-top">
+                        <div class="form-top-left">
+                            <h3>登 录 系 统</h3>
+                            <p>Enter your username and password to log on:</p>
+                        </div>
+                        <div class="form-top-right">
+                            <i class="fa fa-lock"></i>
+                        </div>
+                    </div>
+                    <div class="form-bottom">
+                        <form class="login-form" id="formData">
+                            <div class="form-group">
+                                <label class="sr-only" for="form-username">Username</label>
+                                <input type="text" name="account" placeholder="Username..."
+                                       class="form-control required" id="form-username">
+                            </div>
+                            <div class="form-group">
+                                <label class="sr-only" for="form-password">Password</label>
+                                <input type="password" name="password" placeholder="Password..."
+                                       class="form-control required" id="form-password">
+                            </div>
+                            <button type="button" id="loginBtn" class="btn">登 录</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-3 social-login">
+                    <h3>or login with:</h3>
+                    <div class="social-login-buttons">
+                        <a class="btn btn-link-2" href="#">
+                            <i class="fa fa-qq"></i> QQ
+                        </a>
+                        <a class="btn btn-link-2" href="#">
+                            <i class="fa fa-weixin"></i> 微信
+                        </a>
+                        <a class="btn btn-link-2" href="#">
+                            <i class="fa fa-github"></i> GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- Javascript -->
+<div th:replace="common/login_js :: login_js"></div>
+
+<script>
+    $(function () {
+        $("#loginBtn").click(function () {
+            Validate.initLogin("formData");
+            //执行验证
+            if (! $("#formData").valid()) {
+                return;
+            }
+            //获取表单数据
+            var formData = new FormData($("#formData")[0]);
+            var objData = {};
+            formData.forEach((value, key) => objData[key] = value);
+            FormAjax.redirectAjax("/doLogin","get",objData,"/index");
+        })
+    })
+</script>
+</body>
+</html>

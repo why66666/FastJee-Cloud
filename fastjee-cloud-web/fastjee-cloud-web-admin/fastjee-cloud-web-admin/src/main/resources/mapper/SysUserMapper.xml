@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.chi365.fastjee.cloud.web.admin.dao.sys.SysUserDao">
+
+    <!--表名 -->
+    <sql id="tableName">
+		sys_user a
+	</sql>
+
+    <!-- 字段 -->
+    <sql id="Field">
+        a.key_id,
+        a.team_id,
+        a.account,
+        a.password,
+        a.email,
+        a.mobile,
+        a.profile_photo,
+        a.login_ip,
+        a.login_date,
+        a.create_by as "createBy.keyId",
+        a.create_date,
+        a.update_by as "updateBy.keyId",
+        a.update_date,
+        a.remarks,
+        a.data_status
+	</sql>
+
+    <!-- 字段值 -->
+    <sql id="FieldValue">
+        #{keyId},
+        #{teamId},
+        #{account},
+        #{password},
+        #{email},
+        #{mobile},
+        #{profilePhoto},
+        #{loginIp},
+        #{loginDate},
+        #{createBy.keyId},
+        #{createDate},
+        #{updateBy.keyId},
+        #{updateDate},
+        #{remarks},
+        #{dataStatus}
+	</sql>
+
+    <!-- 自检条件 -->
+    <sql id="WhereTerm">
+        <if test="teamId != null and teamId != ''">
+            AND a.team_id = #{teamId}
+        </if>
+        <if test="account != null and account != ''">
+            AND a.account = #{account}
+        </if>
+        <if test="password != null and password != ''">
+            AND a.password = #{password}
+        </if>
+        <if test="email != null and email != ''">
+            AND a.email = #{email}
+        </if>
+        <if test="mobile != null and mobile != ''">
+            AND a.mobile = #{mobile}
+        </if>
+        <if test="profilePhoto != null and profilePhoto != ''">
+            AND a.profile_photo = #{profilePhoto}
+        </if>
+        <if test="loginIp != null and loginIp != ''">
+            AND a.login_ip = #{loginIp}
+        </if>
+        <if test="loginDate != null">
+            AND a.login_date = #{loginDate}
+        </if>
+        <if test="createBy != null">
+            <if test="createBy.keyId != null and createBy.keyId != ''">
+                AND a.create_by = #{createBy.keyId}
+            </if>
+        </if>
+        <if test="createDate != null">
+            AND a.create_date = #{createDate}
+        </if>
+        <if test="updateBy != null">
+            <if test="updateBy.keyId != null and updateBy.keyId != ''">
+                AND a.update_by = #{updateBy.keyId}
+            </if>
+        </if>
+        <if test="updateDate != null">
+            AND a.update_date = #{updateDate}
+        </if>
+        <if test="remarks != null and remarks != ''">
+            AND a.remarks = #{remarks}
+        </if>
+        <if test="dataStatus != null and dataStatus != ''">
+            AND a.data_status = #{dataStatus}
+        </if>
+    </sql>
+
+    <!-- 自检set属性 -->
+    <sql id="SetTerm">
+        <if test="teamId != null and teamId != ''">
+            a.team_id = #{teamId},
+        </if>
+        <if test="account != null and account != ''">
+            a.account = #{account},
+        </if>
+        <if test="password != null and password != ''">
+            a.password = #{password},
+        </if>
+        <if test="email != null and email != ''">
+            a.email = #{email},
+        </if>
+        <if test="mobile != null and mobile != ''">
+            a.mobile = #{mobile},
+        </if>
+        <if test="profilePhoto != null and profilePhoto != ''">
+            a.profile_photo = #{profilePhoto},
+        </if>
+        <if test="loginIp != null and loginIp != ''">
+            a.login_ip = #{loginIp},
+        </if>
+        <if test="loginDate != null">
+            a.login_date = #{loginDate},
+        </if>
+        <if test="createBy != null">
+            <if test="createBy.keyId != null and createBy.keyId != ''">
+                a.create_by = #{createBy.keyId},
+            </if>
+        </if>
+        <if test="createDate != null">
+            a.create_date = #{createDate},
+        </if>
+        <if test="updateBy != null">
+            <if test="updateBy.keyId != null and updateBy.keyId != ''">
+                a.update_by = #{updateBy.keyId},
+            </if>
+        </if>
+        <if test="updateDate != null">
+            a.update_date = #{updateDate},
+        </if>
+        <if test="remarks != null and remarks != ''">
+            a.remarks = #{remarks},
+        </if>
+        <if test="dataStatus != null and dataStatus != ''">
+            a.data_status = #{dataStatus},
+        </if>
+    </sql>
+
+    <!-- 模糊查询条件 -->
+    <sql id="Fuzzy">
+        <if test="search != null and search != ''">
+            (a.account LIKE concat(concat('%',#{search}),'%') or
+            a.profile_photo LIKE concat(concat('%',#{search}),'%') )
+        </if>
+        and
+        a.data_status = #{status}
+    </sql>
+
+    <!-- 高级搜索条件 -->
+    <sql id="SearchPlus">
+        <if test="searchPlusParams != null">
+            <if test="searchPlusParams.teamId != null and searchPlusParams.teamId != ''">
+                AND a.team_id = #{searchPlusParams.teamId}
+            </if>
+            <if test="searchPlusParams.bwCreateDate != null and searchPlusParams.bwCreateDate != ''">
+                AND (
+                a.create_date between
+                <foreach collection="searchPlusParams.bwCreateDate.split(' - ')" item="item" index="index" separator="and">
+                    #{item}
+                </foreach>
+                )
+            </if>
+            <if test="searchPlusParams.bwUpdateDate != null and searchPlusParams.bwUpdateDate != ''">
+                AND (
+                a.update_date between
+                <foreach collection="searchPlusParams.bwUpdateDate.split(' - ')" item="item" index="index" separator="and">
+                    #{item}
+                </foreach>
+                )
+            </if>
+        </if>
+    </sql>
+    
+    <!-- 根据keyId查询 -->
+    <select id="get" resultType="SysUser" parameterType="String">
+        SELECT
+          <include refid="Field"/>
+        FROM <include refid="tableName"></include>
+        WHERE a.key_id = #{keyId}
+    </select>
+
+    <!-- 查询数据列表 -->
+    <select id="findList" resultType="SysUser" parameterType="SysUser">
+        SELECT
+          <include refid="Field"/>
+        FROM <include refid="tableName"></include>
+        <where>
+            <include refid="WhereTerm"></include>
+        </where>
+    </select>
+
+    <!-- 查询所有数据列表 -->
+    <select id="findAllList" resultType="SysUser">
+        SELECT
+          <include refid="Field"/>
+        FROM <include refid="tableName"></include>
+    </select>
+
+    <!-- 获得数据总条数(用于分页) -->
+    <select id="getCount" resultType="int">
+        SELECT
+          count(a.key_id)
+        FROM <include refid="tableName"></include>
+        where a.data_status = '0'
+    </select>
+
+    <!-- 查询分页数据列表 -->
+    <select id="pageList" resultType="SysUser" parameterType="HashMap">
+        SELECT
+          <include refid="Field"/>
+        FROM <include refid="tableName"></include>
+        <where>
+            <include refid="Fuzzy"></include>
+            <include refid="SearchPlus"></include>
+        </where>
+        order by a.update_date desc
+        limit ${start},${length}
+    </select>
+
+    <!-- 插入数据 -->
+    <insert id="insert" parameterType="SysUser">
+        insert into
+        sys_user
+        (
+            key_id,
+            team_id,
+            account,
+            password,
+            email,
+            mobile,
+            profile_photo,
+            login_ip,
+            login_date,
+            create_by,
+            create_date,
+            update_by,
+            update_date,
+            remarks,
+            data_status
+        ) values (
+        <include refid="FieldValue"></include>
+        )
+    </insert>
+
+    <!-- 删除数据（该方法为物理删除，逻辑删除使用update更新data_status字段） -->
+    <delete id="delete" parameterType="SysUser">
+        delete from
+        <include refid="tableName"></include>
+        where
+        a.key_id = #{keyId}
+    </delete>
+
+    <!-- 更新数据 -->
+    <update id="update" parameterType="SysUser">
+        update
+        <include refid="tableName"></include>
+        <set>
+            <include refid="SetTerm"></include>
+        </set>
+        where
+        a.key_id = #{keyId}
+    </update>
+
+    <!-- 批量删除，逻辑删除 -->
+    <update id="deleteMulti">
+        update
+        <include refid="tableName"></include>
+        set a.data_status = '1'
+        where a.key_id in
+        <foreach collection="array" open="(" close=")" separator="," item="id">
+            #{id}
+        </foreach>
+    </update>
+
+
+
+    <resultMap id="UserRoleMenuMap" type="SysUser">
+        <id column="u1"  property="keyId" />
+        <result column="u2"  property="teamId" />
+        <result column="u3"  property="account" />
+        <result column="u4"  property="password" />
+        <result column="u5"  property="email" />
+        <result column="u6"  property="mobile" />
+        <result column="u7"  property="profilePhoto" />
+        <result column="u8"  property="loginIp" />
+        <result column="u9" property="loginDate" />
+        <result column="u10"  property="createBy.keyId" />
+        <result column="u11" property="createDate" />
+        <result column="u12"  property="updateBy.keyId" />
+        <result column="u13" property="updateDate" />
+        <result column="u14"  property="remarks" />
+        <result column="u15"  property="dataStatus" />
+        <collection ofType="SysRole" property="roles">
+            <id column="r1"  property="keyId" />
+            <result column="r2"  property="teamId" />
+            <result column="r3"  property="name" />
+            <result column="r4"  property="info" />
+            <result column="r5"  property="createBy.keyId" />
+            <result column="r6" property="createDate" />
+            <result column="r7"  property="updateBy.keyId" />
+            <result column="r8" property="updateDate" />
+            <result column="r9"  property="remarks" />
+            <result column="r10"  property="dataStatus" />
+            <collection ofType="SysMenu" property="menus">
+                <id column="m1"  property="keyId" />
+                <result column="m2"  property="parent.keyId" />
+                <result column="m3"  property="parentIds" />
+                <result column="m4"  property="name" />
+                <result column="m5"  property="sort" />
+                <result column="m6"  property="url" />
+                <result column="m7"  property="icon" />
+                <result column="m8"  property="isShow" />
+                <result column="m9"  property="permission" />
+                <result column="m10"  property="createBy.keyId" />
+                <result column="m11" property="createDate" />
+                <result column="m12"  property="updateBy.keyId" />
+                <result column="m13" property="updateDate" />
+                <result column="m14"  property="remarks" />
+                <result column="m15"  property="dataStatus" />
+            </collection>
+        </collection>
+    </resultMap>
+
+    <select id="selectURMByAccount" parameterType="String" resultMap="UserRoleMenuMap">
+        SELECT
+        u.key_id as u1,
+        u.team_id as u2,
+        u.account as u3,
+        u.password as u4,
+        u.email as u5,
+        u.mobile as u6,
+        u.profile_photo as u7,
+        u.login_ip as u8,
+        u.login_date as u9,
+        u.create_by as u10,
+        u.create_date as u11,
+        u.update_by as u12,
+        u.update_date as u13,
+        u.remarks as u14,
+        u.data_status as u15,
+        r.key_id as r1,
+        r.team_id as r2,
+        r.name as r3,
+        r.info as r4,
+        r.create_by as r5,
+        r.create_date as r6,
+        r.update_by as r7,
+        r.update_date as r8,
+        r.remarks as r9,
+        r.data_status as r10,
+        m.key_id as m1,
+        m.parent_id as m2,
+        m.parent_ids as m3,
+        m.name as m4,
+        m.sort as m5,
+        m.url as m6,
+        m.icon as m7,
+        m.is_show as m8,
+        m.permission as m9,
+        m.create_by as m10,
+        m.create_date as m11,
+        m.update_by as m12,
+        m.update_date as m13,
+        m.remarks as m14,
+        m.data_status as m15
+        FROM sys_user u
+        inner join sys_user_role ur on ur.user_id=u.key_id
+        inner join sys_role r on r.key_id=ur.role_id
+        inner join sys_role_menu rm on rm.role_id=r.key_id
+        inner join sys_menu m on rm.menu_id=m.key_id
+        WHERE u.account = #{account} and u.data_status = '0' and r.data_status = '0' and m.data_status = '0'
+  </select>
+</mapper>

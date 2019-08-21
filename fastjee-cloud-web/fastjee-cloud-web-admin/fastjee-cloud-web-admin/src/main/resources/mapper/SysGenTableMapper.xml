@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.chi365.fastjee.cloud.web.admin.dao.gen.SysGenTableDao">
+    <select id="querySevTables" resultType="TableEntity">
+        select * from information_schema.tables
+                      where table_schema="fastjee"
+                        and table_name like 'sev_%'
+                        AND table_name not in(
+		select table_name from fastjee.sys_gen_column
+	)
+    </select>
+
+    <select id="selectColumnByTableName"
+            resultType="ColumnEntiry">
+        select * from information_schema.columns
+                      where table_schema =#{databaseName}
+                        and table_name=#{table_name}
+    </select>
+</mapper>

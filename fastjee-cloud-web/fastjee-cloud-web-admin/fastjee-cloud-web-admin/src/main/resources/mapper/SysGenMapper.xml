@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.chi365.fastjee.cloud.web.admin.dao.gen.SysGenColumnDao">
+
+    <!--表名 -->
+    <sql id="tableName">
+		sys_gen_column a
+	</sql>
+
+    <!-- 字段 -->
+    <sql id="Field">
+        a.key_id,
+        a.table_name,
+        a.column_name,
+        a.column_comment,
+        a.column_default,
+        a.is_nullable,
+        a.data_type,
+        a.character_maximum_length,
+        a.column_type,
+        a.list_show,
+        a.form_show,
+        a.search_plus,
+        a.fuzzy_search,
+        a.co_na_camel_case,
+        a.java_type,
+        a.create_by as "createBy.keyId",
+        a.create_date,
+        a.update_by as "updateBy.keyId",
+        a.update_date,
+        a.remarks,
+        a.data_status
+	</sql>
+
+    <!-- 字段值 -->
+    <sql id="FieldValue">
+        #{keyId},
+        #{tableName},
+        #{columnName},
+        #{columnComment},
+        #{columnDefault},
+        #{isNullable},
+        #{dataType},
+        #{characterMaximumLength},
+        #{columnType},
+        #{listShow},
+        #{formShow},
+        #{searchPlus},
+        #{fuzzySearch},
+        #{coNaCamelCase},
+        #{javaType},
+        #{createBy.keyId},
+        #{createDate},
+        #{updateBy.keyId},
+        #{updateDate},
+        #{remarks},
+        #{dataStatus}
+	</sql>
+
+
+    <!-- 自检set属性 -->
+    <sql id="SetTerm">
+        <if test="columnName != null and columnName != ''">
+            a.column_name = #{columnName},
+        </if>
+        <if test="columnComment != null and columnComment != ''">
+            a.column_comment = #{columnComment},
+        </if>
+        <if test="columnDefault != null and columnDefault != ''">
+            a.column_default = #{columnDefault},
+        </if>
+            a.is_nullable = #{isNullable},
+        <if test="dataType != null and dataType != ''">
+            a.data_type = #{dataType},
+        </if>
+        <if test="characterMaximumLength != null and characterMaximumLength != ''">
+            a.character_maximum_length = #{characterMaximumLength},
+        </if>
+        <if test="columnType != null and columnType != ''">
+            a.column_type = #{columnType},
+        </if>
+        <if test="listShow != null and listShow != ''">
+            a.list_show = #{listShow},
+        </if>
+        <if test="formShow != null and formShow != ''">
+            a.form_show = #{formShow},
+        </if>
+            a.search_plus = #{searchPlus},
+            a.fuzzy_search = #{fuzzySearch},
+        <if test="coNaCamelCase != null and coNaCamelCase != ''">
+            a.co_na_camel_case = #{coNaCamelCase},
+        </if>
+        <if test="javaType != null and javaType != ''">
+            a.java_type = #{javaType},
+        </if>
+        <if test="createBy != null">
+            <if test="createBy.keyId != null and createBy.keyId != ''">
+                a.create_by = #{createBy.keyId},
+            </if>
+        </if>
+        <if test="createDate != null">
+            a.create_date = #{createDate},
+        </if>
+        <if test="updateBy != null">
+            <if test="updateBy.keyId != null and updateBy.keyId != ''">
+                a.update_by = #{updateBy.keyId},
+            </if>
+        </if>
+        <if test="updateDate != null">
+            a.update_date = #{updateDate},
+        </if>
+        <if test="remarks != null and remarks != ''">
+            a.remarks = #{remarks},
+        </if>
+        <if test="dataStatus != null and dataStatus != ''">
+            a.data_status = #{dataStatus},
+        </if>
+    </sql>
+
+
+
+    <!-- 高级搜索条件 -->
+    <sql id="SearchPlus">
+        <if test="searchPlusParams != null">
+            <if test="searchPlusParams.tableName != null and searchPlusParams.tableName != ''">
+                AND a.table_name = #{searchPlusParams.tableName}
+            </if>
+        </if>
+    </sql>
+
+    <!-- 插入数据 -->
+    <insert id="insert" parameterType="SysGenColumn">
+        insert into
+        sys_gen_column
+        (
+        key_id,
+        table_name,
+        column_name,
+        column_comment,
+        column_default,
+        is_nullable,
+        data_type,
+        character_maximum_length,
+        column_type,
+        list_show,
+        form_show,
+        search_plus,
+        fuzzy_search,
+        co_na_camel_case,
+        java_type,
+        create_by,
+        create_date,
+        update_by,
+        update_date,
+        remarks,
+        data_status
+        ) values (
+        <include refid="FieldValue"></include>
+        )
+    </insert>
+
+
+    <update id="update" parameterType="SysGenColumn">
+        update
+        <include refid="tableName"></include>
+        <set>
+            <include refid="SetTerm"></include>
+        </set>
+        where
+        a.key_id = #{keyId}
+    </update>
+
+
+
+    <!-- 获得数据总条数(用于分页) -->
+    <select id="getCount" resultType="int">
+        SELECT
+        count(a.key_id)
+        FROM <include refid="tableName"></include>
+        where a.data_status = '0'
+    </select>
+
+    <!-- 查询分页数据列表 -->
+    <select id="pageList" resultType="SysGenColumn" parameterType="HashMap">
+        SELECT
+        <include refid="Field"/>
+        FROM <include refid="tableName"></include>
+        <where>
+            <include refid="SearchPlus"></include>
+        </where>
+        order by a.update_date desc
+        limit ${start},${length}
+    </select>
+
+    <!-- 查询数据列表 -->
+    <select id="findList" resultType="SysGenColumn" parameterType="SysGenColumn">
+        SELECT
+        <include refid="Field"/>
+        FROM <include refid="tableName"></include>
+        where
+        a.table_name = #{tableName}
+    </select>
+
+    <!-- 创建业务表 -->
+    <update id="createTable" parameterType="HashMap">
+        CREATE TABLE ${tableName} (
+          key_id varchar(32) NOT NULL,
+    <foreach collection="columnsList" item="item"  separator="," close=",">
+          ${item.columnName} ${item.columnType} <if test="item.isNullable != 'on'">not null</if> <if test="item.columnDefault != '' and item.columnDefault != null"> default #{item.columnDefault} </if> COMMENT #{item.columnComment}
+    </foreach>
+          create_by varchar(32) not null ,
+          create_date datetime not null ,
+          update_by varchar(32) not null ,
+          update_date datetime not null ,
+          remarks varchar(255) ,
+          data_status char(1) default '0' not null ,
+          PRIMARY KEY (key_id)) COMMENT=#{titil}
+    </update>
+
+    <!-- 批量删除，此处物理删除！！ -->
+    <delete id="deleteMulti">
+        delete
+        from
+        sys_gen_column
+        where key_id in
+        <foreach collection="array" open="(" close=")" separator="," item="id">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="getCountByTableName" resultType="int" parameterType="String">
+        select count(a.key_id) from sys_gen_column a where a.table_name = #{tableName}
+    </select>
+</mapper>

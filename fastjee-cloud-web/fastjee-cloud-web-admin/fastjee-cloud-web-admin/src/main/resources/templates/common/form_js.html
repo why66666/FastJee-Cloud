@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="form_js">
+    <!-- jQuery 3 -->
+    <script th:src="@{/bower_components/jquery/dist/jquery.min.js}"></script>
+    <!-- Bootstrap 3.3.7 -->
+    <script th:src="@{/bower_components/bootstrap/dist/js/bootstrap.min.js}"></script>
+    <!-- SlimScroll 动态滚动条 -->
+    <script th:src="@{/bower_components/jquery-slimscroll/jquery.slimscroll.min.js}"></script>
+    <!-- FastClick 点击延迟 -->
+    <script th:src="@{/bower_components/fastclick/lib/fastclick.js}"></script>
+    <!-- AdminLTE App -->
+    <script th:src="@{/dist/js/adminlte.min.js}"></script>
+    <!-- iCheck 1.0.1 选框插件 -->
+    <script th:src="@{/plugins/iCheck/icheck.min.js}"></script>
+    <!-- Select2 下拉框 -->
+    <script th:src="@{/bower_components/select2/dist/js/select2.full.min.js}"></script>
+    <!--jQuery Validation Plugin v1.19.0-->
+    <script th:src="@{/plugins/jquery-validation-1.19.0/dist/jquery.validate.js}"></script>
+    <script th:src="@{/plugins/jquery-validation-1.19.0/dist/additional-methods.js}"></script>
+    <script th:src="@{/plugins/jquery-validation-1.19.0/dist/localization/messages_zh.min.js}"></script>
+    <!-- CK Editor -->
+    <script th:src="@{/plugins/ckeditor/ckeditor.js}"></script>
+    <script th:src="@{/plugins/ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js}"></script>
+    <!-- date-range-picker -->
+    <script th:src="@{/bower_components/moment/min/moment.min.js}"></script>
+    <script th:src="@{/bower_components/bootstrap-daterangepicker/daterangepicker.js}"></script>
+    <!-- bootstrap datepicker -->
+    <script th:src="@{/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js}"></script>
+    <!-- **以下自定义** -->
+    <script th:src="@{/dist/js/datetime.js}"></script>
+    <script th:src="@{/dist/js/formAjax.js}"></script>
+    <script th:src="@{/dist/js/validate.js}"></script>
+    <!-- 皮肤控制器 -->
+    <script th:src="@{/dist/js/skin.js}"></script>
+</div>
+</body>
+</html>

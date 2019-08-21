@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>AdminLTE 2 | Data Tables</title>
+    <div th:replace="common/table_head :: table_head"></div>
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <!--Header-->
+    <div th:replace="common/common_mainHeader :: common_mainHeader"></div>
+    <!--Sidebar-->
+    <div th:replace="common/common_mainSidebar :: common_mainSidebar"></div>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                Data Tables
+                <small>advanced tables</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li><a href="#">Tables</a></li>
+                <li class="active">Data tables</li>
+            </ol>
+        </section>persistence
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box box-default collapsed-box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">高级搜索</h3>
+
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                            </div>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body" style="display: none;">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Minimal</label>
+                                        <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                                            <option selected="selected">Alabama</option>
+                                            <option>Alaska</option>
+                                            <option>California</option>
+                                            <option>Delaware</option>
+                                            <option>Tennessee</option>
+                                            <option>Texas</option>
+                                            <option>Washington</option>
+                                        </select><span class="select2 select2-container select2-container--default select2-container--below" dir="ltr" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-few9-container"><span class="select2-selection__rendered" id="select2-few9-container" title="Alabama">Alabama</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                    </div>
+                                    <!-- /.form-group -->
+                                    <div class="form-group">
+                                        <label>Disabled</label>
+                                        <select class="form-control select2 select2-hidden-accessible" disabled="" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                                            <option selected="selected">Alabama</option>
+                                            <option>Alaska</option>
+                                            <option>California</option>
+                                            <option>Delaware</option>
+                                            <option>Tennessee</option>
+                                            <option>Texas</option>
+                                            <option>Washington</option>
+                                        </select><span class="select2 select2-container select2-container--default select2-container--disabled" dir="ltr" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1" aria-labelledby="select2-pywv-container"><span class="select2-selection__rendered" id="select2-pywv-container" title="Alabama">Alabama</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                    </div>
+                                    <!-- /.form-group -->
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Multiple</label>
+                                        <select class="form-control select2 select2-hidden-accessible" multiple="" data-placeholder="Select a State" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                                            <option>Alabama</option>
+                                            <option>Alaska</option>
+                                            <option>California</option>
+                                            <option>Delaware</option>
+                                            <option>Tennessee</option>
+                                            <option>Texas</option>
+                                            <option>Washington</option>
+                                        </select><span class="select2 select2-container select2-container--default" dir="ltr" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--multiple" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1"><ul class="select2-selection__rendered"><li class="select2-search select2-search--inline"><input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" role="textbox" aria-autocomplete="list" placeholder="Select a State" style="width: 518px;"></li></ul></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                    </div>
+                                    <!-- /.form-group -->
+                                    <div class="form-group">
+                                        <label>Disabled Result</label>
+                                        <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                                            <option selected="selected">Alabama</option>
+                                            <option>Alaska</option>
+                                            <option disabled="disabled">California (disabled)</option>
+                                            <option>Delaware</option>
+                                            <option>Tennessee</option>
+                                            <option>Texas</option>
+                                            <option>Washington</option>
+                                        </select><span class="select2 select2-container select2-container--default" dir="ltr" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-jcsl-container"><span class="select2-selection__rendered" id="select2-jcsl-container" title="Alabama">Alabama</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                    </div>
+                                    <!-- /.form-group -->
+                                </div>
+                                <!-- /.col -->
+                            </div>
+                            <!-- /.row -->
+                        </div>
+                        <!-- /.box-body -->
+                        <div class="box-footer" style="display: none;">
+                            Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about
+                            the plugin.
+                        </div>
+                    </div>
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">Hover Data Table</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <table id="dataTable" class="table table-bordered table-hover">
+                                <thead>
+                                <tr>
+                                    <th><input id="checkAll" type="checkbox" class="minimal"></th>
+                                    <th>id</th>
+                                    <th>name</th>
+                                    <th>email</th>
+                                    <th>content</th>
+                                    <th>date</th>
+                                    <th>status</th>
+                                    <th>todo</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+
+    <!-- Main Footer -->
+    <div th:replace="common/common_footer :: common_footer"></div>
+    <!-- Control Sidebar -->
+    <div th:replace="common/common_controlSidebar :: common_controlSidebar"></div>
+    <!-- /.control-sidebar -->
+
+</div>
+<!-- ./wrapper -->
+
+<!--java script-->
+<div th:replace="common/table_js :: table_js"></div>
+
+<!-- page script -->
+<script th:src="@{/dist/js/app.js}"></script>
+<script>
+    console.log($("[data-layout='fixed']").html());
+    var _dataTable;
+    $(function () {
+        var _columns = [
+                {
+                    "data": function () {
+                        return '<input type="checkbox" class="minimal" />';
+                    }
+                },
+                {"data": "se_id"},
+                {"data": "se_name"},
+                {"data": "se_email"},
+                {"data": "se_content"},
+                {"data": "se_date"},
+                {"data": "se_status"},
+                {
+                    "data": function () {
+                        return '<a href="#" type="button" class="btn btn-sm btn-default"><i class="fa fa-search"></i> 查看</a>&nbsp;&nbsp;&nbsp;' +
+                            '<a href="#" type="button" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i> 编辑</a>&nbsp;&nbsp;&nbsp;' +
+                            '<a href="#" type="button" class="btn btn-sm btn-danger"><i class="fa fa-trash-o"></i> 删除</a>'
+                    }
+                }
+            ];
+        _dataTable = App.initDataTables("/singleTableExample/pageList",_columns);
+    });
+
+</script>
+</body>
+</html>
